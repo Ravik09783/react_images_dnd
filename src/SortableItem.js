@@ -18,9 +18,9 @@ export function SortableItem(props) {
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            <Card body className="m-3">
+            <div body className="m-3">
                 <img src={props.id} alt="Sortable item" style={{ width: '20%' }} />
-            </Card>
+            </div>
         </div>
     );
 }
