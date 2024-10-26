@@ -9,7 +9,18 @@ import AllImages from './assets/imags';
 
 function App() {
   const [imageUrls, setImageUrls] = useState([AllImages.First, AllImages.Second, AllImages.Third,AllImages.Fourth, AllImages.Fifth]);
+  
+  const handleDragEnd=(event)=> {
+    const { active, over } = event;
 
+    if (over && active.id !== over.id) {
+      setImageUrls((items) => {
+        const activeIndex = items.indexOf(active.id);
+        const overIndex = items.indexOf(over.id);
+        return arrayMove(items, activeIndex, overIndex);
+      });
+    }
+  }
   return (
     <DndContext
       collisionDetection={closestCenter}
@@ -21,25 +32,15 @@ function App() {
           items={imageUrls}
           strategy={verticalListSortingStrategy}
         >
-          {imageUrls.map((imageUrl) => (
-            <SortableItem key={imageUrl} id={imageUrl} />
+          {imageUrls.map((imageUrl,index) => (
+            <SortableItem key={index} id={imageUrl} />
           ))}
         </SortableContext>
       </Container>
     </DndContext>
   );
 
-  function handleDragEnd(event) {
-    const { active, over } = event;
 
-    if (over && active.id !== over.id) {
-      setImageUrls((items) => {
-        const activeIndex = items.indexOf(active.id);
-        const overIndex = items.indexOf(over.id);
-        return arrayMove(items, activeIndex, overIndex);
-      });
-    }
-  }
 }
 
 export default App;
